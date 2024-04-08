@@ -1,6 +1,7 @@
 from playwright.async_api import async_playwright
 import sqlite3
 from sqlite3 import Error
+from array import array
 
 def connection(database):
     #get connection 
@@ -27,17 +28,28 @@ async def get_restaurant_menu(page, url: str, restaurant: str, city: str, state:
 
                 price = await item.query_selector(".price")
                 price = await price.inner_text() if price else None
+                price = price.replace("$","")
 
                 image = await item.query_selector("img.itemImage")
                 image = await image.get_attribute("src") if image else None
 
                 if not price or not image:
                     continue
-                #insert into db 
-                sql = '''INSERT INTO Dish(RESTAURANT,DISH_NAME,PATH,PRICE)values(?,?,?,?)'''
+                sql = '''SELECT RESTAURANT, DISH_NAME FROM DISH WHERE RESTAURANT = ? AND DISH_NAME = ?'''
                 cur = conn.cursor()
-                cur.execute(sql, (restaurant, name, image, price))
-                conn.commit()
+                result = list(cur.execute(sql, (restaurant, name)))
+                # conn.commit()
+                
+                if len(result)== 0: 
+                    #insert into db 
+                    print("fuck\n\n")
+                    sql = '''INSERT INTO Dish(RESTAURANT,DISH_NAME,PATH,PRICE)values(?,?,?,?)'''
+                    cur = conn.cursor()
+                    print("bitch1\n\n")
+                    cur.execute(sql, (restaurant, name, image, price))
+                    print("bitch2\n\n")
+                    conn.commit()
+                    print("bitch3\n\n")
 
 
 

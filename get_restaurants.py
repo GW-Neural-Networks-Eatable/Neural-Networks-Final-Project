@@ -1,5 +1,6 @@
 from playwright.async_api import async_playwright
 import sqlite3
+from get_menu import get_restaurant_menu
 from sqlite3 import Error
 
 
@@ -39,10 +40,14 @@ async def get_restaurants(page, url: str, city: str, state: str) -> None:
                 menu_url = f"https://www.toasttab.com{menu_url}"
 
                 #insert into database
-                sql = '''INSERT INTO Restaurant(NAME,CITY,STATE)values(?,?,?)'''
+                sql = '''INSERT INTO Restaurant(NAME,URL,CITY,STATE)values(?,?,?,?)'''
                 cur = conn.cursor()
-                cur.execute(sql, (name, city, state))
+                cur.execute(sql, (name, menu_url, city, state))
                 conn.commit()
+
+                #await get_restaurant_menu(page, menu_url, name, city, state)
+                #await page.goto(url)
+
 
         
         # with open(csv, "a") as file:
