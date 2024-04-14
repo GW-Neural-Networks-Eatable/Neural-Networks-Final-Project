@@ -10,7 +10,7 @@ from sqlite3 import Error
 # Get restaurants
 city = "Washington"
 state = "DC"
-url = "https://www.toasttab.com/local/search?filters=eyJ1c2VyU3RyZWV0IjoiIiwidXNlck5laWdoYm9yaG9vZCI6IiIsInVzZXJDaXR5IjoiV2FzaGluZ3RvbiIsInVzZXJTdGF0ZSI6IkRDIiwidXNlckxhdCI6MzguOTA1OTg0OSwidXNlckxvbmciOi03Ny4wMzM0MTc5MDAwMDAwMiwiY3Vpc2luZUlkIjpudWxsfQ%3D%3D&pg=1"
+url = "https://www.toasttab.com/local/search?filters=eyJ1c2VyU3RyZWV0IjoiIiwidXNlck5laWdoYm9yaG9vZCI6IiIsInVzZXJDaXR5IjoiV2FzaGluZ3RvbiIsInVzZXJTdGF0ZSI6IkRDIiwidXNlckxhdCI6MzguOTA1OTg0OSwidXNlckxvbmciOi03Ny4wMzM0MTc5MDAwMDAwMiwiY3Vpc2luZUlkIjpudWxsfQ%3D%3D&pg="
 # restaurants = "restaurants.csv"
 
 # def connection(database):
@@ -36,7 +36,12 @@ async def main():
         with conn:
             #do the dang thing
             #get the restaurants
-            await get_restaurants(page, url, city, state)
+
+            for i in range(1,11):
+
+                earl = url + str(i)
+
+                await get_restaurants(page, earl, city, state)
 
             #gonna need a a select statement 
             cur = conn.cursor()
