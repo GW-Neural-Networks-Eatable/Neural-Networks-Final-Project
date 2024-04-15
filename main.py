@@ -2,6 +2,7 @@ import asyncio
 import csv
 from get_menu import get_restaurant_menu
 from get_restaurants import get_restaurants
+from get_images import get_images
 from playwright.async_api import async_playwright
 import sqlite3
 from sqlite3 import Error
@@ -34,10 +35,10 @@ async def main():
         #connect to the database
         # conn = connection(database)
         with conn:
-            #do the dang thing
-            #get the restaurants
+        #do the dang thing
+        #get the restaurants
 
-            for i in range(1,11):
+            for i in range(1,2):
 
                 earl = url + str(i)
 
@@ -50,8 +51,7 @@ async def main():
             rests = cur.fetchall()
             # print(rests)
             for l in rests:
-                print(l[1], "\n\n\n")
-                await get_restaurant_menu(page, l[1], l[0], city, state)
+               await get_restaurant_menu(page, l[1], l[0], city, state)
     
             # Get menus, for each restaurant
             # with open(restaurants, "r") as file:
@@ -63,6 +63,13 @@ async def main():
             #         await get_restaurant_menu(page, menu_url, restaurant, menu_city, menu_state, "items.csv")
         # Close browser
         await browser.close()
+        with conn: 
+            cur = conn.cursor()
+            sql = '''SELECT * FROM DISH'''
+            cur.execute(sql)
+            dishes = cur.fetchall()
+            await get_images(dishes, conn)
+        
 
 asyncio.run(main())
 ###test

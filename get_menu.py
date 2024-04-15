@@ -42,14 +42,10 @@ async def get_restaurant_menu(page, url: str, restaurant: str, city: str, state:
                 
                 if len(result)== 0: 
                     #insert into db 
-                    print("fuck\n\n")
                     sql = '''INSERT INTO Dish(RESTAURANT,DISH_NAME,PATH,PRICE)values(?,?,?,?)'''
                     cur = conn.cursor()
-                    print("bitch1\n\n")
                     cur.execute(sql, (restaurant, name, image, price))
-                    print("bitch2\n\n")
                     conn.commit()
-                    print("bitch3\n\n")
 
 
 

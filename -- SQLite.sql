@@ -1,3 +1,4 @@
+-- SQLBook: Code
 DROP TABLE IF EXISTS Restaurant; 
 DROP TABLE IF EXISTS Dish; 
 
