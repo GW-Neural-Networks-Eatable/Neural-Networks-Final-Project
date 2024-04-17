@@ -1,6 +1,7 @@
 import os
 import sqlite3
 import shutil
+import imghdr
 
 # Config
 database = "testDB.db"
@@ -14,6 +15,9 @@ bucket_max = 50
 
 # You should not need to change anything below this line
 # -------------------------------------------------------
+
+# We'll need to ensure images are accepted by TF, so we'll store the image types accepted
+img_type_accepted_by_tf = ["bmp", "gif", "jpeg", "png"] # https://stackoverflow.com/a/68192520
 
 # Generate buckets. List of tuples (min, max)
 buckets = [(x, x + bucket_range) for x in range(bucket_min, bucket_max, bucket_range)] 
@@ -38,4 +42,5 @@ for bucket in buckets:
 
     # Copy images to bucket folder
     for item in items:
-        shutil.copy(item[0], f"{image_folder}/{min}_{max}")     
+        if imghdr.what(item[0]) in img_type_accepted_by_tf: # https://stackoverflow.com/a/68192520
+            shutil.copy(item[0], f"{image_folder}/{min}_{max}")     
