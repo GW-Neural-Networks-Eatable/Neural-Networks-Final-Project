@@ -1,6 +1,8 @@
 # Custom
 browser/
 images/
+buckets/
+hpm/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

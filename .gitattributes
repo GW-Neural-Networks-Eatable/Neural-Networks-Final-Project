@@ -1,0 +1,2 @@
+eatable_model/** filter=lfs diff=lfs merge=lfs -text
+Images!/** filter=lfs diff=lfs merge=lfs -text

@@ -38,5 +38,4 @@ for bucket in buckets:
 
     # Copy images to bucket folder
     for item in items:
-        restaurant, dish_name, path, price = item
-        shutil.copy(path, f"{image_folder}/{min}_{max}")
+        shutil.copy(item[0], f"{image_folder}/{min}_{max}")     
