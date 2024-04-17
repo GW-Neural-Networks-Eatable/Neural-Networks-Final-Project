@@ -10,12 +10,14 @@ import os
 async def get_images(dish_data, conn) -> None:
 
 
-    ctr = 0
+    ctr = 3584
 
     for dish in dish_data:
         
         url = dish[2]
-        
+        # print('url: ', url[0])
+        if url[0] != 'h': #if we have already converted an image continue through the loop 
+            continue
         data = requests.get(url).content
 
         check = len(url) - 15
