@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 import time
 # from tensorflow.keras.models import load_model
-# NOTE: the above import is not working
+# TODO: the above import is not working
 
 app = Flask(__name__)
 

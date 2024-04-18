@@ -44,27 +44,4 @@ async def get_restaurants(page, url: str, city: str, state: str) -> None:
                 cur = conn.cursor()
                 cur.execute(sql, (name, menu_url, city, state))
                 conn.commit()
-
-                #await get_restaurant_menu(page, menu_url, name, city, state)
-                #await page.goto(url)
-
-
-        
-        # with open(csv, "a") as file:
-        #     for r in restaurants:
-        #         name = await r.query_selector(".rx-name")
-        #         name = await name.inner_text() if name else ""
-        #         name = name.replace(",", " ") # Replace comma with space
-
-        #         menu_url = await r.query_selector("a.link-to-rx-profile")
-        #         menu_url = await menu_url.get_attribute("href") if menu_url else None
-
-        #         if not menu_url:
-        #             continue
-
-        #         # Convert relative URL to absolute URL
-        #         menu_url = f"https://www.toasttab.com{menu_url}"
-
-        #         # Write to CSV
-        #         file.write(f"{name},{city},{state},{menu_url}\n")
                 
