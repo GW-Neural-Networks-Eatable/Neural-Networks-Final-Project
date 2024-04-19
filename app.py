@@ -1,12 +1,15 @@
 from flask import Flask, render_template, request, jsonify
-import time
-# from tensorflow.keras.models import load_model
-# TODO: the above import is not working
+from tensorflow.keras.models import load_model
+import cv2
+import numpy as np
+
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'  # or any {'0', '1', '2'}
 
 app = Flask(__name__)
 
-# Load the model
-# model = load_model("price_model")
+# Load the model (regression version)
+model = load_model("eatable_model_reg.keras")
 
 @app.route("/")
 def main():
@@ -15,18 +18,19 @@ def main():
 @app.route("/predict", methods=["POST"])
 def predict():
     # Get the data from the form
-    # image = request.files["image"]
+    image = request.files["image"]
+
+    # Load the image for input to the model
+    image = cv2.imdecode(np.frombuffer(image.read(), np.uint8), cv2.IMREAD_COLOR)
+    image = cv2.resize(image, (256, 256))
+    image = image.reshape((1, 256, 256, 3))
 
     # Make a prediction
-    # prediction = model.predict(image)
+    prediction = model.predict(image)
+    
+    # Extract the prediction
+    prediction = prediction[0][0]
+    prediction = str(round(prediction, 2))
 
     # Return the prediction
-    # Create fake JSON response, with price[0] and price[1]
-    prediction = {
-        "price": [10, 20]
-    }
-
-    # Wait 2 seconds to simulate a slow server
-    time.sleep(2)
-
-    return jsonify(prediction)
+    return jsonify({"prediction": prediction})

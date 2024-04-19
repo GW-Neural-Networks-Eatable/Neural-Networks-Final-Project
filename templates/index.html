@@ -56,8 +56,12 @@
                     body: formData
                 });
                 const data = await response.json();
-                document.getElementById('price').html = `$${data.price[0]} &ndash; $${data.price[1]}`;
-                document.getElementById('price-inline').html = `$${data.price[0]} &ndash; $${data.price[1]}`;
+
+                // Get prediction, round to 2 decimal places
+                const prediction = Math.round(data.prediction * 100) / 100;
+
+                document.getElementById('price').innerHTML = `$${prediction}`;
+                document.getElementById('price-inline').innerHTML = `$${prediction}`;
 
                 // Hide loader and show results
                 document.getElementById('loader').classList.add('d-none');
