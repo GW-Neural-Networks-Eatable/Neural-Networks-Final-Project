@@ -36,8 +36,8 @@
                 <p>Crunching numbers (and chips).</p>
             </div>
             <div class="row text-center d-none" id="results">
-                <p id="price">$10 &ndash; $15</p>
-                <p>Based on our model, we predict that the submitted dish is <strong id="price-inline">$10 &ndash; $15</strong>.</p>
+                <p id="price"></p>
+                <p>Based on our model, we predict that the submitted dish is <strong id="price-inline"></strong>.</p>
             </div>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -50,6 +50,7 @@
                 document.getElementById('loader').classList.remove('d-none');
                 document.getElementById('results').classList.add('d-none');
 
+                // Send form data to API
                 const formData = new FormData(event.target);
                 const response = await fetch('/predict', {
                     method: 'POST',
@@ -57,9 +58,10 @@
                 });
                 const data = await response.json();
 
-                // Get prediction, round to 2 decimal places
-                const prediction = Math.round(data.prediction * 100) / 100;
+                // Get prediction
+                const prediction = data.prediction;
 
+                // Update price in DOM
                 document.getElementById('price').innerHTML = `$${prediction}`;
                 document.getElementById('price-inline').innerHTML = `$${prediction}`;
 
