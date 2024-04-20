@@ -1,2 +1,4 @@
+cv2
 Flask
+numpy
 tensorflow
