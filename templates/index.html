@@ -5,69 +5,152 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Eatable</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
         <style>
+            body {
+                font-family: 'Source Sans 3', sans-serif;
+            }
+            p {
+                margin: 0;
+            }
+            #header h1 {
+                color: #2c3e50;
+                font-size: 4rem;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+                margin: 0;
+            }
+            #header p {
+                color: #2c3e50;
+                font-size: 1.75rem;
+                font-style: italic;
+                font-weight: 300;
+                line-height: normal;
+            }
+            #preview {
+                width: 100%;
+                border-radius: 30px;
+                border: 10px dashed #BDC3C7;
+            }
+            .preview-select {
+                cursor: pointer;
+            }
+            #preview p {
+                color: #7F8C8D;
+                text-align: center;
+                font-size: 1.5rem;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+            }
+            #image {
+                display: none;
+            }
             #price {
-                font-size: 3em;
-                font-weight: bolder;
-                text-align: center
+                color: #7F8C8D;
+                text-align: center;
+                font-size: 6rem !important;
+                font-style: normal;
+                font-weight: 900 !important;
+                line-height: 1 !important;
+            }
+            .restart {
+                border-radius: 30px;
+                background: #34495E;
+                color: #ECF0F1;
+                text-align: center;
+                font-size: 1rem;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                text-decoration: none;
+                padding: 10px 20px;
+            }
+            #how a {
+                color: #2980B9;
+                font-size: 1.25rem;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                text-decoration: none;
             }
         </style>
         <script src="https://kit.fontawesome.com/31706935b7.js" crossorigin="anonymous"></script>
     </head>
     <body>
-        <div class="container">
-            <div class="row">
-                <h1>Eatable</h1>
-                <p></p>
+        <div class="min-vh-100 d-flex flex-column p-4">
+            <div class="text-center mb-3" id="header">
+                <h1>&#127789; eatable</h1>
+                <p>restaurant dish price prediction</p>
             </div>
-            <div class="row">
-                <form action="" method="POST">
-                    <!-- TODO: File upload/preview-->
-                    <div class="mb-3">
-                        <input type="file" class="form-control" id="image" name="image">
+            <div class="flex-grow-1 d-flex flex-column py-3">
+                <label class="flex-grow-1 w-100 d-flex">
+                    <div id="preview" class="flex-grow-1 d-flex justify-content-center align-items-center p-3 preview-select">
+                        <p class="select">phone eats first: upload a photo of your food to predict the price</p>
+                        <p class="loader d-none">
+                            <i class="fa-light fa-sharp fa-spinner-third fa-spin fa-5x mb-3"></i><br />
+                            crunching numbers (and chips).
+                        </p>
+                        <div class="results d-none align-tiems-center text-center">
+                            <p id="price"></p>
+                            <p>you have good taste. want to try another dish?</p>
+                            <br />
+                            <br />
+                            <a href="/" class="restart">restart</a>
+                        </div>
                     </div>
-                    <div class="mb-3">
-                        <button type="submit" class="btn btn-primary">Predict</button>
-                    </div>
-                </form>
+                    <input type="file" id="image" name="image" accept=".png, .jpeg, .jpg, .bmp, .gif" required>
+                </label>
             </div>
-            <div class="row text-center d-none" id="loader">
-                <i class="fa-solid fa-spinner-third fa-spin fa-10x mb-3"></i>
-                <p>Crunching numbers (and chips).</p>
-            </div>
-            <div class="row text-center d-none" id="results">
-                <p id="price"></p>
-                <p>Based on our model, we predict that the submitted dish is <strong id="price-inline"></strong>.</p>
-            </div>
+            <p class="text-center m-0" id="how">
+                <!-- TODO: link to paper -->
+                <a href="#" target="_blank">how does eatable work?</a>
+            </p>
         </div>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
         <script>
-            // Submit form data to API
-            document.querySelector('form').addEventListener('submit', async (event) => {
-                event.preventDefault();
+            // When image is selected, set background image of preview
+            document.getElementById('image').addEventListener('change', (event) => {
+                const file = event.target.files[0];
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    // Disable file input
+                    document.getElementById('image').disabled = true;
+                    document.getElementById('preview').classList.remove('preview-select');
 
-                // Show loader, hide results
-                document.getElementById('loader').classList.remove('d-none');
-                document.getElementById('results').classList.add('d-none');
+                    document.getElementById('preview').style.border = 'none';
 
-                // Send form data to API
-                const formData = new FormData(event.target);
-                const response = await fetch('/predict', {
-                    method: 'POST',
-                    body: formData
-                });
-                const data = await response.json();
+                    // Set background image of preview, add white filter to image
+                    document.getElementById('preview').style.background = 'linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url(' + e.target.result + ')';
+                    document.getElementById('preview').style.backgroundSize = 'cover';
+                    document.getElementById('preview').style.backgroundPosition = 'center';
+                    document.getElementById('preview').style.backgroundRepeat = 'no-repeat';
 
-                // Get prediction
-                const prediction = data.prediction;
+                    // Hide select text and show loader
+                    document.getElementById('preview').querySelector('.select').classList.add('d-none');
+                    document.getElementById('preview').querySelector('.loader').classList.remove('d-none');
 
-                // Update price in DOM
-                document.getElementById('price').innerHTML = `$${prediction}`;
-                document.getElementById('price-inline').innerHTML = `$${prediction}`;
+                    // Send form data to API
+                    const formData = new FormData();
+                    formData.append('image', file);
+                    const response = await fetch('/predict', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    const data = await response.json();
 
-                // Hide loader and show results
-                document.getElementById('loader').classList.add('d-none');
-                document.getElementById('results').classList.remove('d-none');
+                    // Get prediction
+                    const prediction = data.prediction;
+                    document.getElementById('price').innerHTML = `$${prediction}`;
+
+                    // Show results
+                    document.getElementById('preview').querySelector('.loader').classList.add('d-none');
+                    document.getElementById('preview').querySelector('.results').classList.remove('d-none');
+                };
+                reader.readAsDataURL(file);
             });
         </script>
     </body>

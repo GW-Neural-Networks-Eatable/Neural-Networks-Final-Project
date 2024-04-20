@@ -27,7 +27,7 @@ def predict():
     image = image.reshape((1, 256, 256, 3))
 
     # Make a prediction
-    prediction = model.predict(image, )
+    prediction = model.predict(image)
     
     # Extract the prediction
     prediction = prediction[0][0]
