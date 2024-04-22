@@ -10,7 +10,7 @@ import os
 async def get_images(dish_data, conn) -> None:
 
 
-    ctr = 3584
+    ctr = 6800
 
     for dish in dish_data:
         

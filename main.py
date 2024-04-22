@@ -38,7 +38,7 @@ async def main():
         #do the dang thing
         #get the restaurants
 
-            for i in range(11,12):
+            for i in range(12,16):
 
                 earl = url + str(i)
 
