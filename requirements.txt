@@ -1,11 +1,11 @@
 boto3
-Flask
+Flask==3.0.3
 gym
 jupyter
 jupyterlab
 jupyterlab_widgets
-keras-nlp
-keras-tuner
+keras-nlp==0.9.3
+keras-tuner==1.4.7
 matplotlib
 numpy
 pandas
@@ -13,7 +13,7 @@ playwright
 opencv-python
 scikit-learn
 seaborn
-tensorflow
+tensorflow==2.16.1
 tensorflow_datasets
-tensorflow-metal
+# tensorflow-metal # This may not be necessary (it "accelerates training with Metal on Mac GPUs.")
 tqdm
