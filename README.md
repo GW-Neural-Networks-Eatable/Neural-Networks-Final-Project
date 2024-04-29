@@ -16,3 +16,9 @@ To run the Flask app, run the following command in the terminal (in your virtual
 flask run
 ```
 The app will be available at `http://127.0.0.1:5000`, where an image can be uploaded to get a price prediction.
+
+## Generating, publishing the paper
+In the `main` branch, run the following commands to generate the paper:
+```bash
+quarto publish gh-pages paper.qmd
+```
