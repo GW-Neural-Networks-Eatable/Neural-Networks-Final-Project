@@ -5,7 +5,7 @@ playwright install
 ```
 
 ## Web Scraping
-
+To scrape data using the url provided in main.py, the url is provided for everything except for the pages you desire. Edit the loop for the number of pages you would like to scrape.
 
 ## Training the model
 To train the model, run the cells in the `model_reg.ipynb` (regression; exact price predictions) or `model_cat.ipynb` (classification into price buckets) notebook. The notebook will save the model(s) in the `models` directory.
