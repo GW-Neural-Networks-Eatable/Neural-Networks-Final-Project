@@ -1,5 +1,5 @@
 -- SQLBook: Code
--- sqlite3 testDB.db ".read schema.sql"
+-- sqlite3 prices.db ".read schema.sql"
 DROP TABLE IF EXISTS Restaurant; 
 DROP TABLE IF EXISTS Dish; 
 
