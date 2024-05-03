@@ -22,7 +22,7 @@ async def get_restaurants(page, url: str, city: str, state: str) -> None:
 
         # Write to CSV (append mode)
         #connect to the database 
-        database = 'testDB.db'
+        database = 'prices.db'
         conn = connection(database)
         with conn: 
             for r in restaurants:

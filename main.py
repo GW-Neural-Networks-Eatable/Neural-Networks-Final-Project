@@ -19,7 +19,7 @@ url = "https://www.toasttab.com/local/search?filters=eyJ1c2VyU3RyZWV0IjoiIiwidXN
 
 
 async def main():
-    database = 'testDB.db'
+    database = 'prices.db'
     #get connection 
     conn = None 
     try: 

@@ -19,7 +19,7 @@ async def get_restaurant_menu(page, url: str, restaurant: str, city: str, state:
         # Get all items
         items = await page.query_selector_all(".itemSection > .item")
          #connect to the database 
-        database = 'testDB.db'
+        database = 'prices.db'
         conn = connection(database)
         with conn: 
             for item in items:

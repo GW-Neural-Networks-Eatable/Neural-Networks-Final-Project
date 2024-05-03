@@ -10,7 +10,6 @@ import numpy as np
 app = Flask(__name__)
 
 model = load_model("models/eatable_model_reg.keras") # Load the model (regression version)
-# model = load_model("models/eatable_model_cat.keras") # Load the model (category version)
 
 @app.route("/")
 def main():
